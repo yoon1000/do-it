@@ -32,7 +32,18 @@ class Promise{
       }
     }
     const reject = (...args) => {
-      
+      if (typeof this.onError === 'function') {
+        this.onError(...args);
+      }
+      if (typeof this.onComplete === 'function') {
+        this.onComplete();
+      }
     }
+    fn(resolve, reject);
+  }
+  then(onDone, onError) {
+    this.onDone = onDone;
+    this.onError = onError;
+    return this;
   }
 }
